@@ -1,0 +1,14 @@
+name: deploy-shiny
+
+# Selve deploy-logikken ligger i rolfmblindgren/shiny-deploy --
+# endringer der treffer alle Grendel-appene ved neste deploy.
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    uses: rolfmblindgren/shiny-deploy/.github/workflows/deploy-shiny.yml@main
+    secrets: inherit

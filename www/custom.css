@@ -1,0 +1,57 @@
+body.selectize-menu-open .sidebar-card .action-button {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+body.selectize-menu-open #beregn {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.sidebar-card .selectize-control.single .selectize-input {
+  display: flex !important;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.sidebar-card .selectize-control.single .selectize-input > .item {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.sidebar-card .selectize-control.single .selectize-input > input {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  min-width: 2ch !important;
+  margin: 0 !important;
+}
+
+.flag-choice {
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.flag-choice--option {
+  display: flex;
+  width: 100%;
+}
+
+.flag-choice--item {
+  display: inline-flex;
+}
+
+.flag-choice__flag {
+  border: 1px solid #ccc;
+}
+
+.sidebar-card .action-button {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}

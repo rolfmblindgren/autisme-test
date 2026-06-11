@@ -1,0 +1,7 @@
+.Rhistory
+app_cache/
+translation.numbers
+scripts/
+make_translations.R
+data/*.sqlite*
+data/*.db*

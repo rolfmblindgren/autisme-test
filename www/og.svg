@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Autisme-refleksjon</title>
+  <desc id="desc">En rolig selvrapport om sosial, sensorisk og rutinemessig friksjon</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#76E9D9"/>
+      <stop offset="100%" stop-color="#1a5c54"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#bff7ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1040" cy="100" r="220" fill="#ffffff" opacity="0.14"/>
+  <circle cx="980" cy="548" r="300" fill="#bff7ee" opacity="0.11"/>
+  <path d="M0 470 C190 395, 340 560, 540 492 S920 390, 1200 500 L1200 630 L0 630 Z" fill="rgba(255,255,255,0.05)"/>
+  <g transform="translate(68,70)">
+    <rect width="500" height="490" rx="36" fill="url(#panel)" stroke="rgba(255,255,255,0.16)"/>
+    <rect x="30" y="28" width="224" height="34" rx="17" fill="rgba(255,255,255,0.11)" stroke="rgba(255,255,255,0.16)"/>
+    <text x="142" y="51" text-anchor="middle" fill="#f5fffe" font-size="14" font-weight="800" letter-spacing="1.3">SELVRAPPORT</text>
+    <text x="30" y="122" fill="#f7fffd" font-size="62" font-weight="900" letter-spacing="-1.6">Autisme</text>
+    <text x="30" y="176" fill="#f7fffd" font-size="56" font-weight="900" letter-spacing="-1.5">refleksjon</text>
+    <text x="30" y="228" fill="#ecfffb" font-size="25" font-weight="700">En rolig selvrapport om sosial, sensorisk</text>
+    <text x="30" y="262" fill="#ecfffb" font-size="25" font-weight="700">og rutinemessig friksjon.</text>
+    <text x="30" y="308" fill="rgba(247,255,253,0.84)" font-size="18" font-weight="500">Den er ikke diagnostisk, men kan gi et</text>
+    <text x="30" y="336" fill="rgba(247,255,253,0.84)" font-size="18" font-weight="500">utgangspunkt for videre refleksjon.</text>
+    <g transform="translate(30,368)">
+      <g transform="translate(0,0)"><rect x="0" y="0" rx="16" width="128" height="34" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)"/><text x="64" y="22" text-anchor="middle" fill="#f7fffd" font-size="14" font-weight="700">Selvrapport</text></g>
+      <g transform="translate(138,0)"><rect x="0" y="0" rx="16" width="126" height="34" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)"/><text x="63" y="22" text-anchor="middle" fill="#f7fffd" font-size="14" font-weight="700">Ikke diagnose</text></g>
+      <g transform="translate(276,0)"><rect x="0" y="0" rx="16" width="132" height="34" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)"/><text x="66" y="22" text-anchor="middle" fill="#f7fffd" font-size="14" font-weight="700">Svar lagres</text></g>
+    </g>
+  </g>
+  <g transform="translate(636,82)">
+    <rect width="498" height="466" rx="40" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)"/>
+    <rect x="26" y="24" width="144" height="30" rx="15" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.16)"/>
+    <text x="98" y="44" text-anchor="middle" fill="#f7fffd" font-size="13" font-weight="800">SQLite-logg</text>
+    <g transform="translate(40,72)">
+      <rect x="0" y="0" width="418" height="324" rx="28" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)"/>
+      <g transform="translate(26,28)">
+        <rect x="0" y="0" width="182" height="212" rx="24" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)"/>
+        <rect x="22" y="24" width="28" height="28" rx="8" fill="none" stroke="#f7fffd" stroke-width="4"/>
+        <path d="M28 38 L34 44 L44 28" fill="none" stroke="#f7fffd" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="66" y="28" width="90" height="6" rx="3" fill="#f7fffd" opacity="0.8"/>
+        <rect x="22" y="74" width="28" height="28" rx="8" fill="none" stroke="#f7fffd" stroke-width="4"/>
+        <rect x="66" y="78" width="108" height="6" rx="3" fill="#f7fffd" opacity="0.55"/>
+        <rect x="22" y="124" width="28" height="28" rx="8" fill="none" stroke="#f7fffd" stroke-width="4"/>
+        <rect x="66" y="128" width="84" height="6" rx="3" fill="#f7fffd" opacity="0.35"/>
+        <rect x="22" y="174" width="28" height="28" rx="8" fill="none" stroke="#f7fffd" stroke-width="4"/>
+        <rect x="66" y="178" width="120" height="6" rx="3" fill="#f7fffd" opacity="0.25"/>
+      </g>
+      <g transform="translate(248,34)">
+        <circle cx="64" cy="64" r="56" fill="rgba(255,255,255,0.14)" stroke="#f7fffd" stroke-width="5"/>
+        <circle cx="64" cy="64" r="24" fill="none" stroke="#1a5c54" stroke-width="8"/>
+        <path d="M64 64 L82 52" stroke="#1a5c54" stroke-width="8" stroke-linecap="round"/>
+        <path d="M64 64 L52 44" stroke="#1a5c54" stroke-width="8" stroke-linecap="round"/>
+        <circle cx="64" cy="64" r="6" fill="#1a5c54"/>
+      </g>
+      <rect x="244" y="196" width="132" height="74" rx="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)"/>
+      <text x="310" y="228" text-anchor="middle" fill="#f7fffd" font-size="18" font-weight="800">Svar lagres</text>
+      <text x="310" y="250" text-anchor="middle" fill="rgba(247,255,253,0.76)" font-size="14">for normer over tid</text>
+    </g>
+  </g>
+</svg>

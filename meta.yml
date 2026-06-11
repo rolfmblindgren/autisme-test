@@ -1,0 +1,30 @@
+title: "Dette er ikke en autismetest"
+description: "En kort selvrapportert refleksjon over sosial, sensorisk og rutinemessig friksjon. Ikke diagnostikk."
+url: "https://shiny.grendel.no/autisme-test/"
+image: "https://shiny.grendel.no/autisme-test/og.png"
+image_alt: "Dette er ikke en autismetest"
+image_type: "image/png"
+site_name: "Grendel"
+locale: "nb_NO"
+image_width: 2400
+image_height: 1260
+twitter_site: "@GrendelEP"
+favicon: "/autisme-test/favicon.svg"
+favicon_type: "image/svg+xml"
+favicon_png: "/autisme-test/favicon-32.png"
+theme_color: "#76E9D9"
+
+schema_type: "WebApplication"
+application_category: "HealthApplication"
+operating_system: "Any"
+in_language:
+  - "nb"
+  - "en"
+author_name: "Rolf Marvin Bøe Lindgren"
+author_type: "Person"
+publisher_name: "Grendel evidensbasert psykologi AS"
+publisher_type: "Organization"
+educational_use: "Selvrefleksjon"
+is_accessible_for_free: true
+disclaimer: "Ikke for diagnostisk bruk."
+bing_site_verification: "FC104B5963EC28F7C5766C79E6AEBE9D"

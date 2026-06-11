@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 22" role="img" aria-label="Finnish flag">
+  <rect width="36" height="22" fill="#ffffff"/>
+  <rect x="0" y="8" width="36" height="6" fill="#003580"/>
+  <rect x="12" y="0" width="6" height="22" fill="#003580"/>
+  <rect x="0" y="0" width="36" height="22" fill="none" stroke="#c8c8c8" stroke-width="1"/>
+</svg>
