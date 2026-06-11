@@ -42,9 +42,21 @@ i18n$set_translation_language("nb")
 map_browser_language <- function(browser_lang) {
   browser_lang <- tolower(browser_lang %||% "")
 
-  if (startsWith(browser_lang, "en")) {
-    return("en")
-  }
+  if (startsWith(browser_lang, "nn")) return("nn")
+  if (startsWith(browser_lang, "nb") || startsWith(browser_lang, "no")) return("nb")
+  if (startsWith(browser_lang, "sv")) return("sv")
+  if (startsWith(browser_lang, "da")) return("da")
+  if (startsWith(browser_lang, "fi")) return("fi")
+  if (startsWith(browser_lang, "smj") || startsWith(browser_lang, "smh")) return("nb")
+  if (startsWith(browser_lang, "se")) return("se")
+  if (startsWith(browser_lang, "fkv")) return("fkv")
+  if (startsWith(browser_lang, "fr")) return("fr")
+  if (startsWith(browser_lang, "es")) return("es")
+  if (startsWith(browser_lang, "de")) return("de")
+  if (startsWith(browser_lang, "pl")) return("pl")
+  if (startsWith(browser_lang, "lt")) return("lt")
+  if (startsWith(browser_lang, "uk")) return("uk")
+  if (startsWith(browser_lang, "en")) return("en")
 
   "nb"
 }
@@ -54,22 +66,23 @@ custom_css_href <- paste0(
   format(file.info("./www/custom.css")$mtime, "%Y%m%d%H%M%S")
 )
 
+custom_js_href <- paste0(
+  "custom.js?v=",
+  format(file.info("./www/custom.js")$mtime, "%Y%m%d%H%M%S")
+)
+
 ensure_db_schema <- function(con) {
   dbExecute(con, "PRAGMA journal_mode = WAL;")
   dbExecute(con, "PRAGMA busy_timeout = 5000;")
   dbExecute(con, "CREATE TABLE IF NOT EXISTS responses (timestamp TEXT NOT NULL, item_id TEXT NOT NULL, score REAL NOT NULL, language TEXT NOT NULL)")
-  dbExecute(con, "CREATE TABLE IF NOT EXISTS experimental_responses (timestamp TEXT NOT NULL, item_id TEXT NOT NULL, score REAL NOT NULL, language TEXT NOT NULL)")
   dbExecute(con, "CREATE INDEX IF NOT EXISTS idx_responses_timestamp ON responses(timestamp)")
   dbExecute(con, "CREATE INDEX IF NOT EXISTS idx_responses_item_id ON responses(item_id)")
   dbExecute(con, "CREATE INDEX IF NOT EXISTS idx_responses_language ON responses(language)")
-  dbExecute(con, "CREATE INDEX IF NOT EXISTS idx_experimental_responses_timestamp ON experimental_responses(timestamp)")
-  dbExecute(con, "CREATE INDEX IF NOT EXISTS idx_experimental_responses_item_id ON experimental_responses(item_id)")
-  dbExecute(con, "CREATE INDEX IF NOT EXISTS idx_experimental_responses_language ON experimental_responses(language)")
 }
 
 core_items_r <- function() {
   tibble(
-    id = paste0("item", 1:10),
+    id = paste0("item", 1:13),
     tekst = c(
       i18n$t("Jeg trenger sjelden å gjette hva folk egentlig mener når de snakker indirekte."),
       i18n$t("Jeg blir sjelden veldig urolig av brå endringer i planer."),
@@ -80,15 +93,7 @@ core_items_r <- function() {
       i18n$t("Sosialt samvær tømmer meg sjelden så mye at jeg trenger lang tid alene etterpå."),
       i18n$t("Jeg trenger sjelden faste rutiner for å føle meg trygg i hverdagen."),
       i18n$t("Jeg blir sjelden så opptatt av spesialinteresser at det går ut over andre ting jeg må gjøre."),
-      i18n$t("Jeg opplever vanligvis blikkontakt, kroppsspråk og små sosiale signaler som ganske naturlige å håndtere.")
-    )
-  )
-}
-
-experimental_items_r <- function() {
-  tibble(
-    id = paste0("item", 11:13),
-    tekst = c(
+      i18n$t("Jeg opplever vanligvis blikkontakt, kroppsspråk og små sosiale signaler som ganske naturlige å håndtere."),
       i18n$t("Jeg føler sjelden behov for å maskere eller spille en rolle for å passe inn sosialt."),
       i18n$t("Små endringer i rekkefølge eller rutiner gjør meg sjelden tydelig urolig."),
       i18n$t("Jeg må sjelden trekke meg unna fordi sanseinntrykk blir for sterke.")
@@ -97,7 +102,7 @@ experimental_items_r <- function() {
 }
 
 answer_score <- function(items) {
-  stopifnot(length(items) == 10)
+  stopifnot(length(items) == 13)
   as.numeric(mean(items))
 }
 
@@ -111,7 +116,7 @@ ui <- fluidPage(
   useShinyjs(debug = FALSE),
   tags$head(
     grendelshiny::grendelshiny_js(),
-    tags$script(src = "custom.js"),
+    tags$script(src = custom_js_href),
     tags$script(HTML("
       Shiny.addCustomMessageHandler('update-title', function(msg) {
         document.title = msg;
@@ -150,12 +155,12 @@ ui <- fluidPage(
         class = "hero-badges",
         span(class = "hero-badge", i18n$t("Spørsmål")),
         span(class = "hero-badge", i18n$t("Resultat")),
-        span(class = "hero-badge", i18n$t("Om dette"))
+        span(class = "hero-badge", i18n$t("Om testen"))
       )
     ),
     div(
       class = "hero-panel",
-      h2(i18n$t("Kort om dette")),
+      h2(i18n$t("Kort om testen")),
       p(i18n$t("Denne siden viser hvordan fravær av sosial, sensorisk og rutinemessig friksjon kan se ut.")),
       p(i18n$t("Den er ikke diagnostisk. Den kan verken bekrefte eller avkrefte autisme."))
     )
@@ -166,7 +171,7 @@ ui <- fluidPage(
       selectizeInput(
         inputId = "selected_language",
         label = i18n$t("Skift språk"),
-        choices = c("nb", "en"),
+        choices = c("nb", "nn", "sv", "da", "fi", "se", "fkv", "fr", "es", "de", "pl", "lt", "uk", "en"),
         selected = "nb",
         options = list(
           render = I("
@@ -214,9 +219,9 @@ ui <- fluidPage(
         ),
         tabPanel(
           value = "om",
-          i18n$t("Om dette"),
+          i18n$t("Om testen"),
           br(),
-          htmlOutput("om_testen")
+          uiOutput("om_testen")
         )
       )
     )
@@ -317,20 +322,11 @@ server <- function(input, output, session) {
       )
     }
 
-    core_items <- core_items_r()
-    exploratory_items <- experimental_items_r()
+    items <- items_r()
 
     tagList(
-      lapply(seq_len(nrow(core_items)), function(i) {
-        render_question(core_items[i, ])
-      }),
-      tags$hr(style = "margin: 1.5rem 0;"),
-      div(
-        style = "width: 100%; max-width: 600px; margin-bottom: 0.75rem; font-style: italic; color: #555;",
-        i18n$t("Foreløpige spørsmål om sosial, sensorisk og rutinemessig belastning. Disse tre spørsmålene brukes ikke i hovedskåren ennå.")
-      ),
-      lapply(seq_len(nrow(exploratory_items)), function(i) {
-        render_question(exploratory_items[i, ])
+      lapply(seq_len(nrow(items)), function(i) {
+        render_question(items[i, ])
       })
     )
   })
@@ -356,29 +352,18 @@ server <- function(input, output, session) {
 
     ensure_db_schema(con)
 
-    core_item_ids <- core_items_r()$id
-    core_scores <- vapply(core_item_ids, function(id) input[[id]], numeric(1))
+    item_ids <- items_r()$id
+    scores <- vapply(item_ids, function(id) input[[id]], numeric(1))
 
-    core_df <- data.frame(
-      timestamp = rep(timestamp, length(core_item_ids)),
-      item_id = core_item_ids,
-      score = core_scores,
-      language = rep(current_language, length(core_item_ids))
-    )
-
-    experimental_item_ids <- experimental_items_r()$id
-    experimental_scores <- vapply(experimental_item_ids, function(id) input[[id]], numeric(1))
-
-    experimental_df <- data.frame(
-      timestamp = rep(timestamp, length(experimental_item_ids)),
-      item_id = experimental_item_ids,
-      score = experimental_scores,
-      language = rep(current_language, length(experimental_item_ids))
+    df <- data.frame(
+      timestamp = rep(timestamp, length(item_ids)),
+      item_id = item_ids,
+      score = scores,
+      language = rep(current_language, length(item_ids))
     )
 
     dbWithTransaction(con, {
-      dbWriteTable(con, "responses", core_df, append = TRUE)
-      dbWriteTable(con, "experimental_responses", experimental_df, append = TRUE)
+      dbWriteTable(con, "responses", df, append = TRUE)
     })
 
     shinyjs::disable("beregn")
@@ -389,87 +374,37 @@ server <- function(input, output, session) {
 
   output$score_md <- renderUI({
     current_lang <- lang()
-    file <- file.path("content", paste0(current_lang, ".score.md"))
-
-    if (!file.exists(file)) {
-      file <- file.path("content", "nb.score.md")
-    }
-
-    includeMarkdown(file)
-  })
-
-  output$resultat_tekst <- renderText({
-    res <- score_reaktiv()
-    if (!res$gyldig) {
-      return("")
-    }
-
-    s <- res$score
-
-    if (s >= 4.25) {
-      paste0(
-        i18n$t("Svarene dine viser få trekk som ligner de autismerelevante friksjonene man ofte ser ved autisme."),
-        " ",
-        i18n$t("Hverdagen virker stabil og forutsigbar.")
-      )
-    } else if (s >= 3.5) {
-      i18n$t("Mønsteret ditt ligger godt innenfor normal variasjon: noen styrker, litt friksjon, men ingenting som peker klart i én retning.")
-    } else if (s >= 2.75) {
-      i18n$t("Du rapporterer en del trekk som kan minne om autisme, men dette kan like gjerne handle om personlighet, erfaringer, stress eller livssituasjon.")
-    } else {
-      i18n$t("Du beskriver flere områder som ofte skaper vansker ved autisme. Dette er fortsatt ikke diagnostikk, men det kan være verdt en mer formell vurdering dersom dette skaper problemer i hverdagen.")
-    }
-  })
-
-  output$score_meter <- renderUI({
-    sc <- score_reaktiv()
-    if (!sc$gyldig) {
-      return(NULL)
-    }
-
-    avg <- as.numeric(sc[["score"]])
-    pct <- as.numeric(sc[["pct"]])
-
-    bar_col <- if (avg < 2.75) {
-      "#d9534f"
-    } else if (avg < 3.5) {
-      "#f0ad4e"
-    } else {
-      "#5cb85c"
-    }
+    i18n$set_translation_language(current_lang)
 
     tagList(
-      div(
-        style = "font-size: 32px; font-weight: 700; margin: 6px 0;",
-        paste0(i18n$t("Gjennomsnittsskår"), " = ", format(round(avg, 1), nsmall = 1), " / 5")
+      tags$p(i18n$t("Skåren er et enkelt gjennomsnitt av de tretten hovedutsagnene.")),
+      tags$ul(
+        tags$li(paste0("1 - ", i18n$t("Stemmer ikke"))),
+        tags$li(paste0("5 - ", i18n$t("Stemmer helt")))
       ),
-      div(
-        style = "height:14px; background:#eee; border-radius:999px; overflow:hidden;",
-        div(style = paste0(
-          "height:100%; width:", pct, "%; background:", bar_col, ";"
-        ))
-      ),
-      div(
-        style = "position:relative; height:16px; margin-top:6px; font-size:12px; color:#444;",
-        span("1", style = "position:absolute; left:0%; transform:translateX(-50%);") ,
-        span("2", style = "position:absolute; left:25%; transform:translateX(-50%);") ,
-        span("3", style = "position:absolute; left:50%; transform:translateX(-50%);") ,
-        span("4", style = "position:absolute; left:75%; transform:translateX(-50%);") ,
-        span("5", style = "position:absolute; left:100%; transform:translateX(-50%);")
-      )
+      tags$p(i18n$t("Høyere skår betyr at svarene dine ligner mindre på et mønster med sosial, sensorisk og rutinemessig friksjon som ofte beskrives ved autisme.")),
+      tags$p(i18n$t("Lavere skår betyr at svarene dine ligner mer på et slikt mønster.")),
+      tags$p(i18n$t("Dette er ikke en diagnose, og det finnes ingen fast norm for denne siden ennå. Bruk skåren som et utgangspunkt for refleksjon, ikke som et fasitsvar."))
     )
   })
 
-  output$om_testen <- renderText({
-    lg <- i18n$get_translation_language()
-    res <- switch(
-      lg,
-      nb = "Dette er en enkel refleksjonsside, ikke en diagnostisk test. Den spør om trekk som ofte nevnes i forbindelse med autisme, særlig sosial tolkning, sansning, rutiner og maskering. Den kan ikke bekrefte eller avkrefte autisme. Den er laget for å vise hvordan et mønster med lite sosial, sensorisk og rutinemessig friksjon kan se ut. Hvis du er usikker, eller hvis dette påvirker hverdagen, bør du snakke med fagfolk.",
-      en = "This is a simple reflection page, not a diagnostic test. It asks about traits that are often mentioned in connection with autism, especially social interpretation, sensory processing, routines, and masking. It cannot confirm or rule out autism. It is meant to show what a pattern with little social, sensory, and routine-related friction can look like. If you are unsure, or if this affects daily life, you should talk with a qualified professional.",
-      "Dette er en enkel refleksjonsside, ikke en diagnostisk test. Den kan ikke bekrefte eller avkrefte autisme."
-    )
+  output$om_testen <- renderUI({
+    current_lang <- lang()
+    i18n$set_translation_language(current_lang)
 
-    paste0("<p>", res, "</p><p><a href='mailto:rolf@grendel.no?subject=Autisme-testen'>© 2026 Grendel AS</a></p>")
+    tagList(
+      tags$p(i18n$t("Dette er en enkel refleksjonsside, ikke en diagnostisk test.")),
+      tags$p(i18n$t("Den spør om trekk som ofte nevnes i forbindelse med autisme, særlig sosial tolkning, sansning, rutiner og maskering.")),
+      tags$p(i18n$t("Den kan ikke bekrefte eller avkrefte autisme.")),
+      tags$p(i18n$t("Den er laget for å vise hvordan et mønster med lite sosial, sensorisk og rutinemessig friksjon kan se ut.")),
+      tags$p(i18n$t("Hvis du er usikker, eller hvis dette påvirker hverdagen, bør du snakke med fagfolk.")),
+      tags$p(
+        tags$a(
+          href = "mailto:rolf@grendel.no?subject=Autisme-testen",
+          "© 2026 Grendel AS"
+        )
+      )
+    )
   })
 }
 

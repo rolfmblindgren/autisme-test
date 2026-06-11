@@ -4,13 +4,38 @@ function flagMarkup(item, kind) {
   const lang = item.value;
 
   const flags = {
-    nb: "norway.svg",
-    en: "uk.svg"
+    nb:  "norway.svg",
+    nn:  "norway.svg",
+    sv: "sv.svg",
+    da: "da.svg",
+    fi: "fi.svg",
+    se:  "sami.svg",
+    // smj deaktivert: oversettelsen er forsøkt, men ikke kvalitetssikret nok til utgivelse.
+    fkv: "kven.svg",
+    fr:  "france.svg",
+    es:  "es.svg",
+    de:  "germany.svg",
+    pl:  "pl.svg",
+    lt:  "lt.svg",
+    uk: "ua.svg",
+    en:  "uk.svg"
   };
 
   const names = {
-    nb: "Bokmål",
-    en: "English"
+    nb:  "Bokmål",
+    nn:  "Nynorsk",
+    sv: "Svenska",
+    da: "Dansk",
+    fi:  "Suomi",
+    se:  "Davvisámegiella",
+    fkv: "Kainuun kieli",
+    fr:  "Français",
+    es:  "Español",
+    de:  "Deutsch",
+    pl:  "Polski",
+    lt:  "Lietuvių",
+    uk:  "Українська",
+    en:  "English"
   };
 
   const flag = flags[lang] || "";
