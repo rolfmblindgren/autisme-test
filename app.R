@@ -322,7 +322,7 @@ server <- function(input, output, session) {
       )
     }
 
-    items <- items_r()
+    items <- core_items_r()
 
     tagList(
       lapply(seq_len(nrow(items)), function(i) {
@@ -352,7 +352,7 @@ server <- function(input, output, session) {
 
     ensure_db_schema(con)
 
-    item_ids <- items_r()$id
+    item_ids <- core_items_r()$id
     scores <- vapply(item_ids, function(id) input[[id]], numeric(1))
 
     df <- data.frame(
