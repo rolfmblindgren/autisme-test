@@ -42,21 +42,9 @@ i18n$set_translation_language("nb")
 map_browser_language <- function(browser_lang) {
   browser_lang <- tolower(browser_lang %||% "")
 
-  if (startsWith(browser_lang, "nn")) return("nn")
-  if (startsWith(browser_lang, "nb") || startsWith(browser_lang, "no")) return("nb")
-  if (startsWith(browser_lang, "sv")) return("sv")
-  if (startsWith(browser_lang, "da")) return("da")
-  if (startsWith(browser_lang, "fi")) return("fi")
-  if (startsWith(browser_lang, "smj") || startsWith(browser_lang, "smh")) return("nb")
-  if (startsWith(browser_lang, "se")) return("se")
-  if (startsWith(browser_lang, "fkv")) return("fkv")
   if (startsWith(browser_lang, "fr")) return("fr")
-  if (startsWith(browser_lang, "es")) return("es")
-  if (startsWith(browser_lang, "de")) return("de")
-  if (startsWith(browser_lang, "pl")) return("pl")
-  if (startsWith(browser_lang, "lt")) return("lt")
-  if (startsWith(browser_lang, "uk")) return("uk")
   if (startsWith(browser_lang, "en")) return("en")
+  if (startsWith(browser_lang, "nb") || startsWith(browser_lang, "no") || startsWith(browser_lang, "nn")) return("nb")
 
   "nb"
 }
@@ -165,7 +153,7 @@ ui <- fluidPage(
       selectizeInput(
         inputId = "selected_language",
         label = i18n$t("Skift språk"),
-        choices = c("nb", "nn", "sv", "da", "fi", "se", "fkv", "fr", "es", "de", "pl", "lt", "uk", "en"),
+        choices = c("nb", "fr", "en"),
         selected = "nb",
         options = list(
           render = I("
