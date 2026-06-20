@@ -282,6 +282,9 @@ server <- function(input, output, session) {
   }
 
   output$sporsmals_ui <- renderUI({
+    current_lang <- lang()
+    i18n$set_translation_language(current_lang)
+
     render_question <- function(item) {
       div(
         style = "width: 100%; max-width: 600px;",

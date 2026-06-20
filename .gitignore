@@ -2,7 +2,10 @@
 .Rhistory
 app_cache/
 translation.numbers
-scripts/
+scripts/*.csv
+scripts/*.sqlite*
+scripts/*.db*
+scripts/*.png
 make_translations.R
 data/*.sqlite*
 data/*.db*
