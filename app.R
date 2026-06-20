@@ -200,10 +200,9 @@ ui <- fluidPage(
           i18n$t("Resultat"),
           br(),
           h3(i18n$t("Tolkning")),
-          textOutput("resultat_tekst"),
-          br(),
-          h4(i18n$t("Gjennomsnittsskår")),
           uiOutput("score_meter"),
+          br(),
+          textOutput("resultat_tekst"),
           br(),
           h4(i18n$t("Hva betyr skåren?")),
           uiOutput("score_md"),
@@ -379,6 +378,62 @@ server <- function(input, output, session) {
       tags$p(i18n$t("Høyere skår betyr at svarene dine ligner mindre på et mønster med sosial, sensorisk og rutinemessig friksjon som ofte beskrives ved autisme.")),
       tags$p(i18n$t("Lavere skår betyr at svarene dine ligner mer på et slikt mønster.")),
       tags$p(i18n$t("Dette er ikke en diagnose, og det finnes ingen fast norm for denne siden ennå. Bruk skåren som et utgangspunkt for refleksjon, ikke som et fasitsvar."))
+    )
+  })
+
+  output$resultat_tekst <- renderText({
+    sc <- score_reaktiv()
+
+    if (is.null(sc) || is.na(sc$score)) {
+      return(i18n$t("Svar på alle utsagn og trykk Beregn resultat for å se tolkningen."))
+    }
+
+    score_value <- sprintf("%.1f / 5", sc$score)
+    interpretation <- if (sc$score < 2) {
+      i18n$t("Svarene dine viser få trekk som ligner de autismerelevante friksjonene man ofte ser ved autisme.")
+    } else if (sc$score < 2.75) {
+      i18n$t("Hverdagen virker stabil og forutsigbar.")
+    } else if (sc$score < 3.75) {
+      i18n$t("Mønsteret ditt ligger godt innenfor normal variasjon: noen styrker, litt friksjon, men ingenting som peker klart i én retning.")
+    } else if (sc$score < 4.5) {
+      i18n$t("Du rapporterer en del trekk som kan minne om autisme, men dette kan like gjerne handle om personlighet, erfaringer, stress eller livssituasjon.")
+    } else {
+      i18n$t("Du beskriver flere områder som ofte skaper vansker ved autisme. Dette er fortsatt ikke diagnostikk, men det kan være verdt en mer formell vurdering dersom dette skaper problemer i hverdagen.")
+    }
+
+    paste0(i18n$t("Gjennomsnittsskår"), ": ", score_value, ". ", interpretation)
+  })
+
+  output$score_meter <- renderUI({
+    sc <- score_reaktiv()
+
+    if (is.null(sc) || is.na(sc$score)) {
+      return(tags$p(i18n$t("Svar på alle utsagn og trykk Beregn resultat for å se gjennomsnittet.")))
+    }
+
+    score_value <- sprintf("%.1f / 5", sc$score)
+    score_percent <- sprintf("%.0f%%", sc$pct)
+
+    div(
+      class = "score-meter",
+      tags$div(class = "small text-muted mb-1", i18n$t("Gjennomsnittsskår")),
+      div(
+        class = "d-flex justify-content-between align-items-center mb-2",
+        tags$strong(score_value),
+        span(score_percent)
+      ),
+      div(
+        class = "progress",
+        div(
+          class = "progress-bar",
+          role = "progressbar",
+          style = sprintf("width: %.1f%%;", sc$pct),
+          `aria-valuenow` = sprintf("%.1f", sc$score),
+          `aria-valuemin` = "1",
+          `aria-valuemax` = "5",
+          score_value
+        )
+      )
     )
   })
 

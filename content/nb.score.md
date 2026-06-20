@@ -1,4 +1,4 @@
-Skåren er et enkelt gjennomsnitt av de ti hovedutsagnene.
+Skåren er et enkelt gjennomsnitt av de tretten hovedutsagnene.
 
 - 1 betyr at utsagnet ikke stemmer
 - 5 betyr at utsagnet stemmer helt

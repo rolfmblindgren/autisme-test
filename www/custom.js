@@ -18,7 +18,7 @@ function flagMarkup(item, kind) {
     pl:  "pl.svg",
     lt:  "lt.svg",
     uk: "ua.svg",
-    en:  "uk.svg"
+    en:  ""
   };
 
   const names = {

@@ -1,4 +1,4 @@
-The score is a simple average of the ten main statements.
+The score is a simple average of the thirteen main statements.
 
 - 1 means the statement does not apply
 - 5 means the statement fully applies
