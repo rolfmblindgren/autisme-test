@@ -11,14 +11,14 @@ Svarene lagres i en SQLite-database, slik at vi kan følge utviklingen over tid.
 
 ## Database
 
-Som standard bruker appen `data/autisme.sqlite`.
+Som standard bruker appen `/srv/shiny-server/data/autisme.sqlite` når den delen finnes. Lokalt faller den tilbake til `data/autisme.sqlite`.
 
 ```
-AUTISME_DB_PATH=data
+AUTISME_DB_PATH=/srv/shiny-server/data
 AUTISME_DB_NAME=autisme.sqlite
 ```
 
-På server kan `AUTISME_DB_PATH` settes til en annen mappe, for eksempel `/srv/shiny-server/data`.
+På lokal utvikling kan `AUTISME_DB_PATH` settes til `data` hvis du vil bruke en lokal kopi.
 
 Tabellen `responses` opprettes automatisk ved første besvarelse og lagrer `timestamp`, `item_id`, `score` og `language`.
 

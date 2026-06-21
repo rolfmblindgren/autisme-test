@@ -225,8 +225,17 @@ server <- function(input, output, session) {
   detected_lang <- reactiveVal("nb")
   user_selected_lang <- reactiveVal(NULL)
 
+  db_dir <- Sys.getenv("AUTISME_DB_PATH", unset = "")
+  if (!nzchar(db_dir)) {
+    db_dir <- if (dir.exists("/srv/shiny-server/data")) {
+      "/srv/shiny-server/data"
+    } else {
+      "data"
+    }
+  }
+
   db_path <- file.path(
-    Sys.getenv("AUTISME_DB_PATH", unset = "data"),
+    db_dir,
     Sys.getenv("AUTISME_DB_NAME", unset = "autisme.sqlite")
   )
 
